@@ -25,9 +25,13 @@ camera.position.z = 5
 // initialize the renderer
 const canvas = document.querySelector('canvas.threejs')
 const renderer = new THREE.WebGLRenderer({
-  canvas: canvas
+  canvas: canvas,
+  antialias:true
 })
+
 renderer.setSize(window.innerWidth, window.innerHeight)
+const maxPixelRatio = Math.min(window.devicePixelRatio,2)
+renderer.setPixelRatio(maxPixelRatio)
 
 // Setup PointerLockControls for mouse look
 const controls = new PointerLockControls(camera, document.body);
