@@ -8,19 +8,27 @@ export function createScene() {
 }
 
 export function addObjects(scene) {
+  //Add Axes
+  const axesHelper = new THREE.AxesHelper(5);
+  scene.add(axesHelper);
+
   // Add cube
   const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
   const cubeMaterial = new THREE.MeshBasicMaterial({color: "red"});
   const cubeMesh = new THREE.Mesh(cubeGeometry, cubeMaterial);
-  scene.add(cubeMesh);
   cubeMesh.position.set(3, 0, 0);
   
   // Add sphere
   const geometry = new THREE.SphereGeometry(1, 32, 32);
   const material = new THREE.MeshBasicMaterial({ color: "blue" });
   const sphere = new THREE.Mesh(geometry, material);
-  scene.add(sphere);
-  
+
+  // Group
+  const group = new THREE.Group();
+  group.add(cubeMesh);
+  group.add(sphere);
+  group.position.set(0, 3, 0);
+  scene.add(group);
   // Add plane
   const planeGeometry = new THREE.PlaneGeometry(10, 10);
   const planeMaterial = new THREE.MeshBasicMaterial({color: "green"});
