@@ -37,5 +37,5 @@ export function addObjects(scene) {
   plane.rotation.x = -Math.PI / 2;
   plane.position.y = -1;
   
-  return { cubeMesh, sphere, plane };
+  return { cubeMesh, sphere, plane, group };
 } 

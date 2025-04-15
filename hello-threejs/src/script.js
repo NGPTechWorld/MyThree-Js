@@ -6,7 +6,7 @@ import { createRenderer, updateRendererSize } from './modules/renderer.js';
 
 // Initialize the scene
 const scene = createScene();
-addObjects(scene);
+const sceneObjects = addObjects(scene);
 
 // Initialize the camera
 const camera = createCamera();
@@ -27,12 +27,28 @@ window.addEventListener('resize', () => {
   updateRendererSize(renderer);
 }, false);
 
+
+const clock = new THREE.Clock();
+let privvaceTime = 0;
+
 // Animation loop
 const renderloop = () => {
   requestAnimationFrame(renderloop);
+  const time = clock.getElapsedTime();
+  const deltaTime = time - privvaceTime;
+  privvaceTime = time;
+  // Update controls
+  controls.update();
   
   // Update movement
   updateMovement(controls);
+  
+  // Access scene objects
+  const { cubeMesh, sphere, plane, group } = sceneObjects;
+  
+  // You can now animate or manipulate the objects here
+  cubeMesh.rotation.x += THREE.MathUtils.degToRad(1) * deltaTime
+  sphere.rotation.y += 0.01 *deltaTime
   
   renderer.render(scene, camera);
 } 
