@@ -2,12 +2,21 @@ import * as THREE from 'three';
 
 export function createScene() {
   const scene = new THREE.Scene();
- // scene.background = new THREE.Color(0x87CEEB); // Sky blue color
+ scene.background = new THREE.Color(0x87CEEB); // Sky blue color
   
   return scene;
 }
 
 export function addObjects(scene) {
+  // TextureLoader
+  const textureLoader = new THREE.TextureLoader();
+  
+  const planText = textureLoader.load('/textures/p5.png')
+  planText.repeat.set(2,2)
+  planText.wrapS = THREE.RepeatWrapping
+  planText.wrapT = THREE.RepeatWrapping
+
+  console.log(planText)
   //Add Axes
   const axesHelper = new THREE.AxesHelper(5);
  // scene.add(axesHelper);
@@ -15,7 +24,7 @@ export function addObjects(scene) {
  torusKnotMaterial.shininess= 90
   // Add cube
   const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
-  const cubeMaterial = new THREE.MeshPhongMaterial({ color: "red" });
+  const cubeMaterial = new THREE.MeshPhongMaterial({ color: "red" ,side:2});
   const cubeMesh = new THREE.Mesh(cubeGeometry, cubeMaterial);
   cubeMesh.position.set(3, 0, 0);
   
@@ -40,7 +49,8 @@ export function addObjects(scene) {
 
   // Add plane
   const planeGeometry = new THREE.PlaneGeometry(10, 10);
-  const planeMaterial = new THREE.MeshPhongMaterial({color: "green" , side:2});
+  const planeMaterial = new THREE.MeshPhongMaterial({ side:2});
+  planeMaterial.map=planText
   const plane = new THREE.Mesh(planeGeometry, planeMaterial);
   scene.add(plane);
   plane.rotation.x = -Math.PI / 2;
@@ -48,7 +58,7 @@ export function addObjects(scene) {
   
   //Add  light
   // Ambient light for overall scene illumination
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.0);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
   scene.add(ambientLight);
 
   // Main point light
